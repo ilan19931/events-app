@@ -1,0 +1,611 @@
+{
+	"info": {
+		"_postman_id": "74675037-b180-471d-b7f7-69007e47a3a2",
+		"name": "Events",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"new_test_3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Event",
+					"item": [
+						{
+							"name": "Get Event by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/event/634d042256a60faf9e006b05",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"event",
+										"634d042256a60faf9e006b05"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Events",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/event",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Event",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"body\": \"fire alert12312321321\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/event/634d042256a60faf9e006b05",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"event",
+										"634d042256a60faf9e006b05"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Event",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"body\": \"123123\",\r\n    \"categoryId\": \"634cf4b73ac93353d9efae29\",\r\n    \"locationId\": \"634cf4853ac93353d9efae26\",\r\n    \"severityId\": \"634cf44a3ac93353d9efae24\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/event",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Event",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/event/634d042256a60faf9e006b05",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"event",
+										"634d042256a60faf9e006b05"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Get Category by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/category/634cf4b73ac93353d9efae29",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"category",
+										"634cf4b73ac93353d9efae29"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/category",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Category",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"fire alert\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/category/634cf4a03ac93353d9efae28",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"category",
+										"634cf4a03ac93353d9efae28"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"test2222\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/category",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Category",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/category/634cfa06aa111650d2b79c74",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"category",
+										"634cfa06aa111650d2b79c74"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Location",
+					"item": [
+						{
+							"name": "Get Location by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/location/634cf4853ac93353d9efae26",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"location",
+										"634cf4853ac93353d9efae26"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Locations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/location",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"location"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Location",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Tel-Aviv\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/location/634cf4713ac93353d9efae25",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"location",
+										"634cf4713ac93353d9efae25"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Loation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"new test loc\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/location",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"location"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Location",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/location/634cfdda2158f35b76884ed7",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"location",
+										"634cfdda2158f35b76884ed7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Severity",
+					"item": [
+						{
+							"name": "Get Severity by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/severity/634cf44a3ac93353d9efae24",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"severity",
+										"634cf44a3ac93353d9efae24"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Severities",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/Severity",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"Severity"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Severity",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Regular\",\r\n    \"color\": \"green\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/severity/634cf44a3ac93353d9efae24",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"severity",
+										"634cf44a3ac93353d9efae24"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Severity",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"test2\",\r\n    \"color\": \"black\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/severity",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"severity"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Severity",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/category",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3005/api",
+			"type": "default"
+		}
+	]
+}
