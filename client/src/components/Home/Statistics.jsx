@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -14,27 +15,39 @@ const Item = styled.div`
   padding: 0.6rem;
   border-radius: 8px;
   text-align: center;
+  background-color: ${({ theme }) => theme.bgLighter};
 
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   transition: all 300ms ease;
 
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-      rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    box-shadow: ${({ theme }) => theme.boxShadow};
   }
 `;
 
 const Statistics = () => {
+  const [stats, setStats] = useState({});
+
+  useEffect(() => {
+    const getStats = async () => {
+      const res = await axios.get("/event/get/statistics");
+
+      setStats(res.data);
+    };
+
+    getStats();
+  }, []);
+
   return (
     <Container>
       <Item>
         <h4>All</h4>
 
-        <span>600</span>
+        <span>{stats?.all}</span>
       </Item>
       <Item>
         <h4>Open</h4>
-        <span>300</span>
+        <span>{stats?.open}</span>
       </Item>
       <Item>
         <h4>All</h4>

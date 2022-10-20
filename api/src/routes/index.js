@@ -6,6 +6,7 @@ import eventRoutes from "./event/event.routes.js";
 import categoryRoutes from "./event/category.routes.js";
 import locationRoutes from "./event/location.routes.js";
 import severityRoutes from "./event/severity.routes.js";
+import commentRoutes from "./comment.routes.js";
 
 const applyAllRoutes = (app) => {
   app.use("/api/auth", authRoutes);
@@ -16,6 +17,8 @@ const applyAllRoutes = (app) => {
   app.use("/api/category", categoryRoutes);
   app.use("/api/location", locationRoutes);
   app.use("/api/severity", severityRoutes);
+
+  app.use("/api/comment", commentRoutes);
 };
 
 export default applyAllRoutes;

@@ -2,22 +2,22 @@ import mongoose from "mongoose";
 
 const eventSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    locationId: {
+    location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
       required: true,
     },
-    categoryId: {
+    category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
       required: true,
     },
-    severityId: {
+    severity: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Severity",
       required: true,
@@ -28,6 +28,10 @@ const eventSchema = new mongoose.Schema(
     },
     images: {
       type: [String],
+    },
+    isOpen: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

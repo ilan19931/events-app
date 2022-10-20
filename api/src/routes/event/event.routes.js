@@ -5,6 +5,7 @@ import {
   deleteEvent,
   getAllEvents,
   getEventById,
+  getStatistics,
   updateEvent,
 } from "../../controllers/event/event.controller.js";
 import { verifyUserToken } from "../../helpers/tokenVerify.js";
@@ -21,9 +22,9 @@ router.post(
     verifyUserToken,
     [
       body("body", "body is required").not().isEmpty(),
-      body("categoryId", "category id is required").not().isEmpty(),
-      body("locationId", "location id is required").not().isEmpty(),
-      body("severityId", "severity id is required").not().isEmpty(),
+      body("category", "category id is required").not().isEmpty(),
+      body("location", "location id is required").not().isEmpty(),
+      body("severity", "severity id is required").not().isEmpty(),
     ],
   ],
   addEvent
@@ -32,5 +33,7 @@ router.post(
 router.put("/:id", verifyUserToken, updateEvent);
 
 router.delete("/:id", verifyUserToken, deleteEvent);
+
+router.get("/get/statistics", getStatistics);
 
 export default router;

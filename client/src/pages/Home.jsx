@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import Statistics from "../components/Home/Statistics";
 import Filters from "../components/Home/Filters";
 import Events from "../components/Home/Events";
+import axios from "axios";
+import EventPage from "./EventPage/EventPage";
 
 const Container = styled.div``;
 
@@ -15,16 +17,22 @@ const Wrapper = styled.div`
 `;
 
 const Home = () => {
+  const [popUp, setPopUp] = useState(false);
+
   return (
-    <Container>
-      <Wrapper>
-        <Statistics />
+    <>
+      <Container>
+        <Wrapper>
+          <Statistics />
 
-        <Filters />
+          <Filters />
 
-        <Events />
-      </Wrapper>
-    </Container>
+          <Events setPopUp={setPopUp} />
+        </Wrapper>
+      </Container>
+
+      {popUp && <EventPage setPopUp={setPopUp} />}
+    </>
   );
 };
 

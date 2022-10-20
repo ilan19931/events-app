@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 // Icons
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import { signOut } from "../../redux/slices/auth.slice";
 
 const Container = styled.div`
-  background-color: #7b7d7d;
-  height: 50px;
+  background-color: ${({ theme }) => theme.bg};
+  height: 60px;
   display: flex;
   align-items: center;
 `;
@@ -39,7 +40,7 @@ const Item = styled.div`
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  color: white;
+  color: ${({ theme }) => theme.text};
   transition: all 300ms ease;
 
   &:hover {
@@ -55,14 +56,27 @@ const OfflineButtons = styled.div`
 
 const Button = styled.button``;
 
-const Navbar = () => {
+const Navbar = ({ setLightTheme }) => {
   const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+    document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    navigate("/signin");
+  };
 
   const offlineNav = (
     <>
       <OfflineButtons>
-        <Button className="btn btn-primary">Sign In</Button>
-        <Button className="btn btn-success">Sign Up</Button>
+        <Link to="/signin">
+          <Button className="btn btn-primary">Sign In</Button>
+        </Link>
+
+        <Link to="/signup">
+          <Button className="btn btn-success">Sign Up</Button>
+        </Link>
       </OfflineButtons>
     </>
   );
@@ -79,6 +93,10 @@ const Navbar = () => {
 
       <Item>Reports</Item>
       <Item>Statistics</Item>
+
+      <Button onClick={handleSignOut} className="btn btn-danger">
+        Sign Out
+      </Button>
     </>
   );
 
@@ -87,13 +105,18 @@ const Navbar = () => {
       <Wrapper>
         <InnerContainer>
           <Logo>
-            <EventAvailableIcon />
+            <Link to="/">
+              <EventAvailableIcon style={{ fontSize: "2.5rem" }} />
+            </Link>
 
             {auth.user && <p>Welcome, {auth.user.email}</p>}
           </Logo>
         </InnerContainer>
 
-        <InnerContainer>{auth.user ? loggedNav : offlineNav}</InnerContainer>
+        <InnerContainer>
+          {auth.user ? loggedNav : offlineNav}
+          <Item onClick={() => setLightTheme((prev) => !prev)}>Change Theme</Item>
+        </InnerContainer>
       </Wrapper>
     </Container>
   );

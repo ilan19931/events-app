@@ -10,24 +10,13 @@ import { validationResult } from "express-validator";
 
 import createError from "../../helpers/error.js";
 
-const fillEventWithDetails = async (event) => {
-  const { userId, categoryId, locationId, severityId } = event;
-
-  const user = await User.findById(userId);
-  const category = await Category.findById(categoryId);
-  const location = await Location.findById(locationId);
-  const severity = await Severity.findById(severityId);
-
-  return {
-    user,
-    category,
-    location,
-    severity,
-  };
-};
-
 export const getAllEvents = async (req, res, next) => {
-  const events = await Event.find();
+  const events = await Event.find({ isOpen: true })
+    .populate({ path: "user", model: User })
+    .populate({ path: "category", model: Category })
+    .populate({ path: "location", model: Location })
+    .populate({ path: "severity", model: Severity })
+    .sort({ createdAt: -1 });
 
   res.send(events);
 };
@@ -55,21 +44,21 @@ export const addEvent = async (req, res, next) => {
     return next(createError(403, errors));
   }
 
-  const newEvent = new Event({ ...req.body, userId: req.user._id });
+  const newEvent = new Event({ ...req.body, user: req.user._id });
 
   try {
     // check if all ids are valid
-    const foundCategory = await Category.findById(newEvent.categoryId);
+    const foundCategory = await Category.findById(newEvent.category);
     if (!foundCategory) {
       return next(createError(403, "Invalid category id"));
     }
 
-    const foundLocation = await Location.findById(newEvent.locationId);
+    const foundLocation = await Location.findById(newEvent.location);
     if (!foundLocation) {
       return next(createError(403, "Invalid location id"));
     }
 
-    const foundSeverity = await Severity.findById(newEvent.severityId);
+    const foundSeverity = await Severity.findById(newEvent.severity);
     if (!foundSeverity) {
       return next(createError(403, "Invalid severity id"));
     }
@@ -97,30 +86,26 @@ export const updateEvent = async (req, res, next) => {
   }
 
   try {
-    const { categoryId, locationId, severityId } = req.body;
+    const { category, location, severity } = req.body;
 
     // check if all ids are valid
-    const foundCategory = await Category.findById(categoryId);
-    if (categoryId && !foundCategory) {
+    const foundCategory = await Category.findById(category);
+    if (category && !foundCategory) {
       return next(createError(403, "Invalid category id"));
     }
 
-    const foundLocation = await Location.findById(locationId);
-    if (locationId && !foundLocation) {
+    const foundLocation = await Location.findById(location);
+    if (location && !foundLocation) {
       return next(createError(403, "Invalid location id"));
     }
 
-    const foundSeverity = await Severity.findById(severityId);
-    if (severityId && !foundSeverity) {
+    const foundSeverity = await Severity.findById(severity);
+    if (severity && !foundSeverity) {
       return next(createError(403, "Invalid severity id"));
     }
 
     //save updated event
-    const updatedEvent = await Event.findByIdAndUpdate(
-      eventId,
-      { $set: req.body },
-      { new: true }
-    );
+    const updatedEvent = await Event.findByIdAndUpdate(eventId, { $set: req.body }, { new: true });
 
     res.send(updatedEvent);
   } catch (err) {
@@ -146,4 +131,22 @@ export const deleteEvent = async (req, res, next) => {
   } catch (err) {
     next({ status: 403, message: err });
   }
+};
+
+export const getStatistics = async (req, res, next) => {
+  const allEvents = await Event.find();
+  let openEvents = 0;
+
+  allEvents.map((e) => {
+    if (e.isOpen) {
+      openEvents += 1;
+    }
+  });
+
+  const data = {
+    all: allEvents.length,
+    open: openEvents,
+  };
+
+  res.send(data);
 };

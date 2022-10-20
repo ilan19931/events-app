@@ -7,14 +7,18 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  background-color: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.text};
 `;
 
 const Main = styled.div``;
 
 const Layout = (props) => {
+  const { setLightTheme } = props;
   return (
     <Container>
-      <Navbar />
+      <Navbar setLightTheme={setLightTheme} />
 
       <Main>{props.children}</Main>
 
