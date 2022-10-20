@@ -26,8 +26,13 @@ const eventSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    images: {
-      type: [String],
+    files: {
+      type: [
+        {
+          name: String,
+          url: String,
+        },
+      ],
     },
     isOpen: {
       type: Boolean,

@@ -24,7 +24,7 @@ const Comments = () => {
   return (
     <Container>
       {comments?.map((comment) => (
-        <Comment comment={comment} />
+        <Comment key={comment._id} comment={comment} />
       ))}
 
       {comments.length === 0 && <NoComments>There are no comments</NoComments>}

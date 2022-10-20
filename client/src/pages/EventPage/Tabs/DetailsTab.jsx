@@ -45,6 +45,11 @@ const SeverityColor = styled.div`
   width: 20px;
 `;
 
+const Body = styled.div`
+  max-height: 60vh;
+  overflow: auto;
+`;
+
 const DetailsTab = () => {
   const { event } = useSelector((state) => state.event);
 
@@ -72,35 +77,37 @@ const DetailsTab = () => {
           <StrongText>Severity:</StrongText>
           <Text>
             <Severity>
-              <SeverityColor style={{ backgroundColor: event?.severity.color }} />
+              <SeverityColor
+                style={{ backgroundColor: event?.severity?.color }}
+              />
 
-              <span>{event?.severity.name}</span>
+              <span>{event?.severity?.name}</span>
             </Severity>
           </Text>
         </TextSection>
 
         <TextSection>
           <StrongText>Category:</StrongText>
-          <Text>{event?.category.name}</Text>
+          <Text>{event?.category?.name}</Text>
         </TextSection>
 
         <TextSection>
           <StrongText>Location:</StrongText>
-          <Text>{event?.location.name}</Text>
+          <Text>{event?.location?.name}</Text>
         </TextSection>
 
         <TextSection>
           <StrongText>Reported By:</StrongText>
-          <Text>{event?.user.email}</Text>
+          <Text>{event?.user?.email}</Text>
         </TextSection>
       </Section>
 
       <Section>
         <Title>Description</Title>
 
-        <TextSection>
+        <Body>
           <Text>{event?.body}</Text>
-        </TextSection>
+        </Body>
       </Section>
     </Container>
   );

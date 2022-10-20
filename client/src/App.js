@@ -10,8 +10,12 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { dark, light } from "./themes/mainTheme";
 
+import firebaseApp from "./firebase/firebase.js";
+
 const App = () => {
   const [lightTheme, setLightTheme] = useState(true);
+
+  //firebaseApp();
 
   return (
     <div>

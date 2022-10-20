@@ -2,6 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 
 const Container = styled.div``;
 const Form = styled.form`
@@ -31,8 +38,16 @@ const Text = styled.span`
 `;
 //const Container = styled.div``
 
+const Files = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+`;
+
 const NewEvent = () => {
   const navigate = useNavigate();
+
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const [formData, setFormData] = useState({
     location: "",
@@ -43,6 +58,7 @@ const NewEvent = () => {
     category: "",
     severity: "",
     body: "",
+    files: [],
   });
   const [loadedData, setLoadedData] = useState({});
 
@@ -64,7 +80,10 @@ const NewEvent = () => {
 
   const handleChange = (e) => {
     const index = e.nativeEvent.target.selectedIndex;
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.nativeEvent.target[index].text }));
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.nativeEvent.target[index].text,
+    }));
 
     setDataObj((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -73,6 +92,8 @@ const NewEvent = () => {
     e.preventDefault();
 
     try {
+      setDataObj((prev) => ({ ...prev, files: uploadedFiles }));
+
       await axios.post("/event", dataObj);
 
       navigate("/");
@@ -81,16 +102,68 @@ const NewEvent = () => {
     }
   };
 
+  const handleFileUpload = (e) => {
+    const storage = getStorage();
+
+    const file = e.target.files[0];
+    const newName = new Date().getTime() + file.name;
+
+    const storageRef = ref(storage, `/eventsFiles/${newName}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        console.log(snapshot);
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+
+          setUploadedFiles((prev) => [
+            ...prev,
+            { name: newName, url: downloadURL },
+          ]);
+        });
+      }
+    );
+  };
+
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
         <Section>
           <Text>Location</Text>
           <SelectArea>
-            <Input disabled type="text" className="form-control" value={formData.location} />
+            <Input
+              disabled
+              type="text"
+              className="form-control"
+              value={formData.location}
+            />
 
             <InnerArea>
-              <select className="form-select" size="5" name="location" onChange={handleChange}>
+              <select
+                className="form-select"
+                size="5"
+                name="location"
+                onChange={handleChange}
+              >
                 {loadedData.locations?.map((loc) => (
                   <option key={loc._id} value={loc._id}>
                     {loc.name}
@@ -102,10 +175,20 @@ const NewEvent = () => {
 
           <Text>Category</Text>
           <SelectArea>
-            <Input disabled type="text" className="form-control" value={formData.category} />
+            <Input
+              disabled
+              type="text"
+              className="form-control"
+              value={formData.category}
+            />
 
             <InnerArea>
-              <select className="form-select" size="5" name="category" onChange={handleChange}>
+              <select
+                className="form-select"
+                size="5"
+                name="category"
+                onChange={handleChange}
+              >
                 {loadedData.categories?.map((cat) => (
                   <option key={cat._id} value={cat._id}>
                     {cat.name}
@@ -118,7 +201,11 @@ const NewEvent = () => {
           <InnerArea>
             <Text>Severity</Text>
 
-            <select onChange={(e) => setDataObj((prev) => ({ ...prev, severity: e.target.value }))}>
+            <select
+              onChange={(e) =>
+                setDataObj((prev) => ({ ...prev, severity: e.target.value }))
+              }
+            >
               <option value="" defaultChecked>
                 Select Severity
               </option>
@@ -136,11 +223,29 @@ const NewEvent = () => {
           <textarea
             className="form-control"
             rows="10"
-            onChange={(e) => setDataObj((prev) => ({ ...prev, body: e.target.value }))}
+            onChange={(e) =>
+              setDataObj((prev) => ({ ...prev, body: e.target.value }))
+            }
           ></textarea>
 
-          <span>No files attached</span>
-          <input type="file" className="btn btn-success" />
+          <Files>
+            {uploadedFiles.length > 0
+              ? uploadedFiles.map((uf) => (
+                  <a
+                    style={{ color: "blue", textDecoration: "underline" }}
+                    href={uf.url}
+                    target="_blank"
+                  >
+                    {uf.name}
+                  </a>
+                ))
+              : "No Files Attached"}
+          </Files>
+          <input
+            type="file"
+            className="btn btn-success"
+            onChange={handleFileUpload}
+          />
 
           <button className="btn btn-primary">Save Event</button>
         </Section>

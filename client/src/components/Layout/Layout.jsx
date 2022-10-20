@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Alerts from "./Alerts";
 
 const Container = styled.div`
   display: flex;
@@ -17,13 +18,17 @@ const Main = styled.div``;
 const Layout = (props) => {
   const { setLightTheme } = props;
   return (
-    <Container>
-      <Navbar setLightTheme={setLightTheme} />
+    <>
+      <Container>
+        <Navbar setLightTheme={setLightTheme} />
 
-      <Main>{props.children}</Main>
+        <Main>{props.children}</Main>
 
-      <Footer />
-    </Container>
+        <Footer />
+      </Container>
+
+      <Alerts />
+    </>
   );
 };
 

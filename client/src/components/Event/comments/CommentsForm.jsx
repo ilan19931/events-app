@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import styled from "styled-components";
 import { addComment } from "../../../redux/slices/event.slice";
+import createAlert from "../../../helpers/createAlert";
 
 const Form = styled.form`
   display: flex;
@@ -21,7 +22,7 @@ const CommentsForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (body.length > 1) {
+    if (body.length > -1) {
       try {
         const res = await axios.post("/comment", { body, eventId: event._id });
 
@@ -30,6 +31,8 @@ const CommentsForm = () => {
         setBody("");
       } catch (err) {
         console.log(err);
+
+        createAlert({ message: "sdf" }, dispatch);
       }
     }
   };

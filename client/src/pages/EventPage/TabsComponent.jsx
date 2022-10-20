@@ -4,6 +4,7 @@ import DetailsTab from "./Tabs/DetailsTab";
 import CommentsTab from "./Tabs/CommentsTab";
 
 import "react-tabs/style/react-tabs.css";
+import FilesTab from "./Tabs/FilesTab";
 
 const TabsComponent = () => {
   return (
@@ -23,7 +24,7 @@ const TabsComponent = () => {
       </TabPanel>
 
       <TabPanel>
-        <h2>Any content 2</h2>
+        <FilesTab />
       </TabPanel>
     </Tabs>
   );
