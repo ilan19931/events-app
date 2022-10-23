@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import GuestRoute from "./components/Helpers/GuestRoute";
@@ -10,12 +10,8 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { dark, light } from "./themes/mainTheme";
 
-import firebaseApp from "./firebase/firebase.js";
-
 const App = () => {
   const [lightTheme, setLightTheme] = useState(true);
-
-  //firebaseApp();
 
   return (
     <div>

@@ -1,7 +1,10 @@
 import express from "express";
 import { body } from "express-validator";
 import { signIn, signUp } from "../controllers/auth.controller.js";
+import { verifyUserToken } from "../helpers/tokenVerify.js";
 const router = express.Router();
+
+router.get("/", verifyUserToken, (req, res, next) => {});
 
 router.post(
   "/signin",
