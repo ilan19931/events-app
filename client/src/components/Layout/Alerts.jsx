@@ -6,6 +6,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const Alert = styled.div`

@@ -11,6 +11,8 @@ const Container = styled.div`
 
   background-color: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.text};
+
+  position: relative;
 `;
 
 const Main = styled.div``;
@@ -18,17 +20,15 @@ const Main = styled.div``;
 const Layout = (props) => {
   const { setLightTheme } = props;
   return (
-    <>
-      <Container>
-        <Navbar setLightTheme={setLightTheme} />
+    <Container>
+      <Navbar setLightTheme={setLightTheme} />
 
-        <Main>{props.children}</Main>
+      <Main>{props.children}</Main>
 
-        <Footer />
-      </Container>
+      <Footer />
 
       <Alerts />
-    </>
+    </Container>
   );
 };
 

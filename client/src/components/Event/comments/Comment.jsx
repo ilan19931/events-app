@@ -24,10 +24,11 @@ const Body = styled.div`
 `;
 
 const Comment = ({ comment }) => {
+  console.log(comment);
   return (
     <Container>
       <Top>
-        <Text>By: {comment.user}</Text>
+        <Text>By: {comment.userId.email}</Text>
         <Text>12.06.2022 14:53</Text>
       </Top>
 

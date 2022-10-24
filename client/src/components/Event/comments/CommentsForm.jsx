@@ -15,6 +15,7 @@ const Button = styled.button``;
 
 const CommentsForm = () => {
   const { event } = useSelector((state) => state.event);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const [body, setBody] = useState("");
@@ -26,13 +27,14 @@ const CommentsForm = () => {
       try {
         const res = await axios.post("/comment", { body, eventId: event._id });
 
-        dispatch(addComment(res.data));
+        dispatch(addComment({ ...res.data, userId: { email: user.email } }));
 
         setBody("");
       } catch (err) {
+        const error = err.response.data.message;
         console.log(err);
 
-        createAlert({ message: "sdf" }, dispatch);
+        createAlert(error, dispatch);
       }
     }
   };

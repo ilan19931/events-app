@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Comment from "../models/comment.model.js";
+import User from "../models/user.model.js";
 import { validationResult } from "express-validator";
 
 import createError from "../helpers/error.js";
@@ -13,7 +14,9 @@ export const getAllEventComments = async (req, res, next) => {
   }
 
   try {
-    const foundComments = await Comment.find({ eventId }).sort({ createdAt: -1 });
+    const foundComments = await Comment.find({ eventId })
+      .populate({ path: "userId", model: User })
+      .sort({ createdAt: -1 });
 
     res.send(foundComments);
   } catch (err) {
@@ -90,7 +93,10 @@ export const deleteComment = async (req, res, next) => {
   }
 
   try {
-    const isDeleted = await Comment.findOneAndDelete({ _id: commentId, userId: req.user._id });
+    const isDeleted = await Comment.findOneAndDelete({
+      _id: commentId,
+      userId: req.user._id,
+    });
     if (!isDeleted) {
       return next(createError(403, "invalid comment id"));
     }
