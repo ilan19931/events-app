@@ -2,10 +2,10 @@ import { v4 as uuid } from "uuid";
 
 import { addAlert, removeAlert } from "../redux/slices/alert.slice";
 
-const createAlert = (alert, dispatch) => {
+const createAlert = (msg, dispatch) => {
   const _id = uuid();
 
-  const newAlert = { _id, ...alert };
+  const newAlert = { _id, msg };
 
   dispatch(addAlert(newAlert));
 

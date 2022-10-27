@@ -8,6 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 
 import store from "./redux/store";
+import firebase from "./firebase/firebase";
 
 let persistor = persistStore(store);
 

@@ -14,6 +14,7 @@ import {
 import authReducer from "./slices/auth.slice.js";
 import eventReducer from "./slices/event.slice.js";
 import alertReducer from "./slices/alert.slice.js";
+import globalReducer from "./slices/global.slice.js";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   event: eventReducer,
   alerts: alertReducer,
+  global: globalReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

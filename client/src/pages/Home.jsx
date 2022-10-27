@@ -6,6 +6,9 @@ import Filters from "../components/Home/Filters";
 import Events from "../components/Home/Events";
 import axios from "axios";
 import EventPage from "./EventPage/EventPage";
+import { useDispatch, useSelector } from "react-redux";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { clearFiles } from "../redux/slices/global.slice";
 
 const Container = styled.div``;
 
@@ -18,6 +21,29 @@ const Wrapper = styled.div`
 
 const Home = () => {
   const [popUp, setPopUp] = useState(false);
+
+  const { files: globalFiles } = useSelector((state) => state.global);
+  const dispatch = useDispatch();
+
+  if (globalFiles.length > 0) {
+    const storage = getStorage();
+
+    for (let i = 0; i < globalFiles.length; i++) {
+      // Create a reference to the file to delete
+      const desertRef = ref(storage, `eventsFiles/${globalFiles[i].name}`);
+
+      // Delete the file
+      deleteObject(desertRef)
+        .then(() => {
+          console.log(globalFiles[i].name + " has been deleted!");
+        })
+        .catch((error) => {
+          // Uh-oh, an error occurred!
+        });
+    }
+
+    dispatch(clearFiles());
+  }
 
   return (
     <>

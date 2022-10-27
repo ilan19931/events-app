@@ -26,7 +26,7 @@ const Alerts = () => {
   return (
     <Container>
       {alerts?.map((alert) => (
-        <Alert key={alert._id}>{alert.message}</Alert>
+        <Alert key={alert._id}>{alert.msg}</Alert>
       ))}
     </Container>
   );

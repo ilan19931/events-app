@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { format } from "timeago.js";
 
 const Container = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ const Comment = ({ comment }) => {
     <Container>
       <Top>
         <Text>By: {comment.userId.email}</Text>
-        <Text>12.06.2022 14:53</Text>
+        <Text>{format(comment.createdAt)}</Text>
       </Top>
 
       <Body>{comment.body}</Body>

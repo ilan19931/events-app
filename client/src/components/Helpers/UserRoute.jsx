@@ -8,16 +8,10 @@ const UserRoute = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      if (!auth.user) {
-        navigate("/signin");
-      }
-
-      checkAuth();
-    } catch (err) {
+    if (!auth.user) {
       navigate("/signin");
     }
-  }, [auth.user, navigate]);
+  }, [navigate]);
 
   return <>{props.children}</>;
 };
